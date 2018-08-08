@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Miniquery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="./lib/miniquery.js"></script>
+    <style>
+        .display {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="eyed">eyed</div>
+    <a href="#hello">click me</a>
+    <div class="klass">klass</div>
+    <p>For search Users on github and will be display on console</p>
+    <input type="text" id="search">
+    <input type="button" onclick="search()" value="Search">
+    <script>
+        // console.log(SweetSelector.select("a")[0]);
+        // console.log(SweetSelector.select("#eyed")[0]);
+        // console.log(SweetSelector.select(".klass"));
+        DOM.hide(".klass")
+        DOM.show(".klass")
+        // console.log();
+        // this custom function make event if on click this will be display
+        EventDispatcher.on('.klass', 'click', function () {
+            console.log('awesome');
+        })
+        // this custom function display event
+        EventDispatcher.trigger('.klass', 'click')
+        function search() {
+            let selected = document.querySelector('#search')
+            // console.log(selected.value);
+            
+            AjaxWrapper.request({
+                url: `https://api.github.com/search/users?q=${selected.value}`,
+                type: 'GET',
+                success: function (data) {
+                    console.log('=== FAIL ====')
+                    console.log(data)
+                },
+                fail: function (data) {
+                    console.log('==== SUCCESS =====')
+                    // console.log('Users not found');
+                    console.log(data)
+                }
+            });
+        }
+        console.log(miniquery('.klass')[0]);
+    </script>
+</body>
+
+</html>
